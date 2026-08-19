@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nalluri Sai Swetha — Software Engineer</title>
-<meta name="description" content="Nalluri Sai Swetha — Backend software engineer working in Java, Spring Boot, and FinTech systems. Also: singing, movies, and the occasional AI experiment.">
-<meta property="og:title" content="Nalluri Sai Swetha">
+<title>Swetha — Software Engineer</title>
+<meta name="description" content="Swetha — Backend software engineer working in Java, Spring Boot, and FinTech systems. Also: singing, movies, and the occasional AI experiment.">
+<meta property="og:title" content="Swetha">
 <meta property="og:description" content="I build the things behind the screen. Backend engineer in FinTech. Off the clock: singing and film.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -322,15 +322,30 @@
   .proj-detail p{font-size:14.5px; color:var(--ink-soft); line-height:1.7;}
 
   /* ================= EXPLORE ================= */
-  #explore .lab-list{
-    display:flex; flex-wrap:wrap; gap:14px 18px;
-    margin-top:32px;
+  #explore{margin-top:32px;}
+  .explore-rows{
+    display:grid;
+    grid-template-columns: 140px 1fr;
+    gap:0 40px;
+    max-width:680px;
+    margin-top:28px;
+    border-top:1px solid var(--stone);
   }
-  .lab-pill{
-    font-family:var(--mono); font-size:12.5px; letter-spacing:0.05em;
-    padding:10px 18px;
-    border:1px solid var(--ink);
-    color:var(--ink);
+  .explore-row{display:contents;}
+  .explore-label{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.1em; color:var(--rust);
+    padding:18px 0;
+    border-bottom:1px solid var(--stone);
+  }
+  .explore-val{
+    font-size:16px; line-height:1.65; color:var(--ink);
+    padding:16px 0;
+    border-bottom:1px solid var(--stone);
+  }
+  @media (max-width:600px){
+    .explore-rows{grid-template-columns:1fr;}
+    .explore-label{border-bottom:none; padding-bottom:4px;}
+    .explore-val{padding-top:0;}
   }
   .lab-note{
     margin-top:40px; max-width:620px; font-family:var(--serif); font-style:italic;
@@ -381,9 +396,15 @@
     transition:transform .25s ease;
   }
   .play-btn:hover{transform:scale(1.06);}
-  .wave-track{flex:1; height:64px;}
-  .wave-track svg{width:100%; height:100%;}
-  .wave-track path{stroke:var(--dusty); stroke-width:2; fill:none;}
+  .wave-track{flex:1; height:64px; position:relative; cursor:pointer;}
+  .wave-track svg{width:100%; height:100%; display:block; position:absolute; inset:0;}
+  .wave-track .wave-bg path{stroke:#3f4d60; stroke-width:2; fill:none;}
+  .wave-track .wave-fg{
+    position:absolute; inset:0; overflow:hidden; width:0%;
+    transition:width .05s linear;
+  }
+  .wave-track .wave-fg svg{width:var(--track-w, 400px); max-width:none;}
+  .wave-track .wave-fg path{stroke:var(--rust); stroke-width:2; fill:none;}
   .player-meta{
     margin-top:18px; display:flex; justify-content:space-between;
     font-family:var(--mono); font-size:11px; letter-spacing:0.08em; color:var(--dusty);
@@ -391,6 +412,7 @@
   .player-placeholder-note{
     margin-top:14px; font-family:var(--mono); font-size:11px; color:var(--dusty); letter-spacing:0.04em;
   }
+  .play-btn[disabled]{opacity:0.4; cursor:not-allowed;}
 
   /* ================= WATCH ================= */
   #watch{background:var(--ink); color:var(--paper);}
@@ -704,17 +726,22 @@
 
   <div class="rule reveal"></div>
 
-  <div class="lab-list reveal" id="explore">
-    <span class="eyebrow" style="width:100%; margin-bottom:8px;"><span class="n">·</span> WHAT I'M EXPLORING RIGHT NOW</span>
-  </div>
-  <div class="lab-list reveal">
-    <span class="lab-pill">Python</span>
-    <span class="lab-pill">LLM engineering</span>
-    <span class="lab-pill">AI-assisted development</span>
-    <span class="lab-pill">Cursor</span>
-    <span class="lab-pill">Claude</span>
-    <span class="lab-pill">GitHub Copilot</span>
-    <span class="lab-pill">AI-integrated backend systems</span>
+  <div id="explore" class="reveal">
+    <span class="eyebrow"><span class="n">·</span> WHAT I'M EXPLORING RIGHT NOW</span>
+    <div class="explore-rows">
+      <div class="explore-row">
+        <span class="explore-label">LANGUAGE</span>
+        <span class="explore-val">Python</span>
+      </div>
+      <div class="explore-row">
+        <span class="explore-label">FOCUS</span>
+        <span class="explore-val">LLM engineering · AI-integrated backend systems</span>
+      </div>
+      <div class="explore-row">
+        <span class="explore-label">WORKFLOW</span>
+        <span class="explore-val">AI-assisted development — Cursor, Claude, GitHub Copilot</span>
+      </div>
+    </div>
   </div>
   <p class="lab-note reveal">This is a side door, not the main hallway. My work is still, first and foremost, backend engineering — this is just the part of the workshop where I'm allowed to make a mess.</p>
 </section>
@@ -735,23 +762,30 @@
     <div class="sing-copy reveal">
       <p class="lede">I don't just listen to music. I sing it.</p>
       <p>Not performance, not polish — just the thing I reach for the same way I reach for a debugger. It's where a system in my head finally goes quiet for a bit.</p>
-      <p>Recordings go here as I add them.</p>
+      <p>One take, unedited.</p>
     </div>
 
-    <div class="player reveal" role="group" aria-label="Audio player placeholder">
+    <div class="player reveal" role="group" aria-label="Audio player">
+      <audio id="sing-audio" src="singing.m4a" preload="metadata"></audio>
       <div class="player-row">
-        <button class="play-btn" id="play-btn" aria-label="Play — no recording added yet">▶</button>
-        <div class="wave-track">
-          <svg viewBox="0 0 400 64" preserveAspectRatio="none">
-            <path id="idle-wave" d="M0,32 Q10,32 20,32 T40,32 T60,32 T80,32 T100,32 T120,32 T140,32 T160,32 T180,32 T200,32 T220,32 T240,32 T260,32 T280,32 T300,32 T320,32 T340,32 T360,32 T380,32 T400,32"/>
-          </svg>
+        <button class="play-btn" id="play-btn" aria-label="Play recording">▶</button>
+        <div class="wave-track" id="wave-track">
+          <div class="wave-bg">
+            <svg viewBox="0 0 400 64" preserveAspectRatio="none">
+              <path d="M0,32 L6,32 L11,20 L16,44 L21,14 L26,50 L31,24 L36,40 L41,32 L52,32 L57,18 L62,46 L67,10 L72,54 L77,26 L82,38 L87,32 L98,32 L103,22 L108,42 L113,16 L118,48 L123,28 L128,36 L133,32 L144,32 L149,19 L154,45 L159,12 L164,52 L169,25 L174,39 L179,32 L190,32 L195,21 L200,43 L205,15 L210,49 L215,27 L220,37 L225,32 L236,32 L241,18 L246,46 L251,11 L256,53 L261,24 L266,40 L271,32 L282,32 L287,20 L292,44 L297,13 L302,51 L307,26 L312,38 L317,32 L328,32 L333,22 L338,42 L343,17 L348,47 L353,29 L358,35 L363,32 L374,32 L379,19 L384,45 L389,14 L394,50 L400,32"/>
+            </svg>
+          </div>
+          <div class="wave-fg" id="wave-fg">
+            <svg viewBox="0 0 400 64" preserveAspectRatio="none">
+              <path d="M0,32 L6,32 L11,20 L16,44 L21,14 L26,50 L31,24 L36,40 L41,32 L52,32 L57,18 L62,46 L67,10 L72,54 L77,26 L82,38 L87,32 L98,32 L103,22 L108,42 L113,16 L118,48 L123,28 L128,36 L133,32 L144,32 L149,19 L154,45 L159,12 L164,52 L169,25 L174,39 L179,32 L190,32 L195,21 L200,43 L205,15 L210,49 L215,27 L220,37 L225,32 L236,32 L241,18 L246,46 L251,11 L256,53 L261,24 L266,40 L271,32 L282,32 L287,20 L292,44 L297,13 L302,51 L307,26 L312,38 L317,32 L328,32 L333,22 L338,42 L343,17 L348,47 L353,29 L358,35 L363,32 L374,32 L379,19 L384,45 L389,14 L394,50 L400,32"/>
+            </svg>
+          </div>
         </div>
       </div>
       <div class="player-meta">
-        <span>UNTITLED — RECORDING SOON</span>
-        <span>00:00 / 00:00</span>
+        <span id="track-label">ORIGINAL RECORDING</span>
+        <span id="time-label">00:00 / 00:00</span>
       </div>
-      <div class="player-placeholder-note">No recording uploaded yet — this fills in when Swetha adds one.</div>
     </div>
   </div>
 </section>
@@ -891,13 +925,66 @@
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 
-  // Play button placeholder interaction
+  // Sing player — real audio wiring
+  var audio = document.getElementById('sing-audio');
   var playBtn = document.getElementById('play-btn');
-  if(playBtn){
+  var waveTrack = document.getElementById('wave-track');
+  var waveFg = document.getElementById('wave-fg');
+  var timeLabel = document.getElementById('time-label');
+
+  function fmtTime(sec){
+    if(!isFinite(sec) || sec < 0) sec = 0;
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function updateProgress(){
+    if(!audio.duration) return;
+    var pct = (audio.currentTime / audio.duration) * 100;
+    waveFg.style.width = pct + '%';
+    timeLabel.textContent = fmtTime(audio.currentTime) + ' / ' + fmtTime(audio.duration);
+  }
+
+  if(audio && playBtn){
+    audio.addEventListener('loadedmetadata', function(){
+      timeLabel.textContent = '0:00 / ' + fmtTime(audio.duration);
+      // match the moving (fg) wave width to the track's rendered width so it clips correctly
+      waveFg.style.setProperty('--track-w', waveTrack.offsetWidth + 'px');
+    });
+
     playBtn.addEventListener('click', function(){
-      playBtn.setAttribute('aria-label', 'No recording uploaded yet');
-      playBtn.textContent = '♪';
-      setTimeout(function(){ playBtn.textContent = '▶'; }, 900);
+      if(audio.paused){
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    });
+
+    audio.addEventListener('play', function(){
+      playBtn.textContent = '❚❚';
+      playBtn.setAttribute('aria-label', 'Pause recording');
+    });
+    audio.addEventListener('pause', function(){
+      playBtn.textContent = '▶';
+      playBtn.setAttribute('aria-label', 'Play recording');
+    });
+    audio.addEventListener('ended', function(){
+      playBtn.textContent = '▶';
+      playBtn.setAttribute('aria-label', 'Play recording');
+    });
+    audio.addEventListener('timeupdate', updateProgress);
+
+    waveTrack.addEventListener('click', function(e){
+      if(!audio.duration) return;
+      var rect = waveTrack.getBoundingClientRect();
+      var pct = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pct * audio.duration;
+      updateProgress();
+    });
+
+    window.addEventListener('resize', function(){
+      waveFg.style.setProperty('--track-w', waveTrack.offsetWidth + 'px');
     });
   }
 })();
